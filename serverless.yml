@@ -1,0 +1,48 @@
+service: Tweak
+
+useDotenv: true
+package:
+  individually: true
+plugins:
+  - serverless-webpack
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  apiGateway:
+    binaryMediaTypes:
+      - 'multipart/form-data'
+    minimumCompressionSize: 1024
+  stage: ${opt:stage, 'dev'}
+  region: ${env:SERVERLESS_PROVIDER_REGION}
+  tracing:
+    apiGateway: true
+    lambda: true
+
+  environment:
+    NODE_ENV: production
+    APPLICATION_ENVIRONMENT: ${env:APPLICATION_ENVIRONMENT}
+    AWS_ACCOUNT_ID: ${env:AWS_ACCOUNT_ID}
+    AWS_BUCKET_ACCESS_KEY_ID: ${env:AWS_BUCKET_ACCESS_KEY_ID}
+    AWS_BUCKET_NAME: ${env:AWS_BUCKET_NAME}
+    AWS_BUCKET_REGION: ${env:AWS_BUCKET_REGION}
+    AWS_BUCKET_SECRET_ACCESS_KEY: ${env:AWS_BUCKET_SECRET_ACCESS_KEY}
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    SERVERLESS_PROVIDER_REGION: ${env:SERVERLESS_PROVIDER_REGION}
+    WEB_TOKEN_SECRET: ${env:SECRET_KEY}
+functions:
+  app:
+    handler: main/index.loader
+    events:
+      - http:
+          method: ANY
+          path: /{proxy+}
+          cors: true
+custom:
+  webpack:
+    includeModules:
+      forceExclude:
+        - aws-sdk
+    webpackConfig: 'webpack.config.js'
+    packager: 'yarn'

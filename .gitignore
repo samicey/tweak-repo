@@ -1,0 +1,15 @@
+# directories
+node_modules
+build
+dist
+.build/
+.serverless
+.webpackCache
+.webpack
+
+# files
+.DS_Store
+.env
+*.log
+webpack-stats.json
+junit.xml
