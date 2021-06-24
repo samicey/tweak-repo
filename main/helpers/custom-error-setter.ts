@@ -1,4 +1,3 @@
-import { traceError } from './handle-error';
 
 export const RETURN_CODE = {
   BadRequest: { code: 400, message: 'Bad Request' },
@@ -28,10 +27,6 @@ export class CustomError extends Error {
       ...returnType,
       message: error || returnType.message,
     };
-
-    if (typeof jest === 'undefined') {
-      traceError(error, 'errorHandler');
-    }
   }
 
   public get customError(): string | undefined {

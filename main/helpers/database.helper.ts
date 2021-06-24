@@ -1,15 +1,20 @@
 import mongoose from 'mongoose';
-let isConnected;
+mongoose.Promise = global.Promise;
+let isConnected: number;
 
 export const createDatabaseConnection = async () => {
+    const { DATABASE_CONNECTION_URI } = process.env;
+
+    if (!DATABASE_CONNECTION_URI) {
+        console.log('=> no database connection');
+        return Promise.reject();
+      }
     if (isConnected) {
         console.log('=> using existing database connection');
         return Promise.resolve();
-      }
-      
-    mongoose.Promise = global.Promise;
+    }
 
-    return await mongoose.connect(process.env.DB,{
+    return await mongoose.connect(DATABASE_CONNECTION_URI,{
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useFindAndModify: false,
