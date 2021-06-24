@@ -8,7 +8,7 @@ import { createDatabaseConnection } from './helpers/database.helper';
 
 dotenv.config();
 
-const app = express();
+export const app = express();
 
 (async () => {
   await createDatabaseConnection()

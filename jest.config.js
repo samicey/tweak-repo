@@ -1,7 +1,7 @@
 module.exports = {
   roots: ['<rootDir>/main'],
   preset: 'ts-jest',
-  testTimeout: 1000,
+  testTimeout: 190000,
   testEnvironment: 'node',
   testPathIgnorePatterns: ['node_modules', '/assets'],
 };
