@@ -25,7 +25,7 @@ export const uploadImage = async (request: Request, response: Response) => {
             contentType: file.mimetype,
             metadataKey,
             byteSize: String(file.size),
-            userId:  user._id,
+            userId:  user.id,
         });
 
         return responseHandlers(response, RETURN_CODE.OK, image); 
